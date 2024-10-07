@@ -18,6 +18,10 @@ ipq50xx_setup_interfaces()
 				"0:lan:1" "1:lan:2" "2:lan:3" \
 				"3:wan"
 			;;
+		wallys,dr5018)
+			ucidef_set_interface_wan "eth1"
+			ucidef_set_interface_lan "eth0"
+			;;
 	esac
 }
 
