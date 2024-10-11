@@ -44,8 +44,7 @@ DEFAULT_PACKAGES.router:=\
 	odhcp6c \
 	odhcpd-ipv6only \
 	ppp \
-	ppp-mod-pppoe \
-  default-settings-chn \
+	ppp-mod-pppoe
 
 ifneq ($(DUMP),)
   all: dumpinfo
