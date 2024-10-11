@@ -1,3 +1,9 @@
+define Device/EmmcImage
+	IMAGES += factory.bin sysupgrade.bin
+	IMAGE/factory.bin := append-rootfs | pad-rootfs | pad-to 64k
+	IMAGE/sysupgrade.bin/squashfs := append-rootfs | pad-to 64k | sysupgrade-tar rootfs=$$$$@ | append-metadata
+endef
+
 define Device/redmi_ax3000
   $(call Device/FitImage)
   $(call Device/UbiFit)
@@ -19,14 +25,16 @@ TARGET_DEVICES += redmi_ax3000
 
 define Device/wallys_dr5018
   $(call Device/FitImage)
-  $(call Device/UbiFit)
+  $(call Device/EmmcImage)
   SOC := ipq5018
   DEVICE_VENDOR := Wallys
   DEVICE_MODEL := DR5018
-  BLOCKSIZE := 128k
+  BLOCKSIZE := 64k
   PAGESIZE := 2048
+  KERNEL_SIZE := 6144k
   DEVICE_DTS_CONFIG := config@mp03.5-c1
   DEVICE_PACKAGES := ipq-wifi-wallys_dr5018
+  IMAGE/factory.bin := append-kernel | pad-to $${KERNEL_SIZE}  |  append-rootfs | append-metadata
 endef
 TARGET_DEVICES += wallys_dr5018
 
