@@ -701,9 +701,11 @@ define KernelPackage/pstore
   TITLE:=Pstore file system
   DEFAULT:=m if ALL_KMODS
   KCONFIG:= \
-	CONFIG_PSTORE
+	CONFIG_PSTORE \
+	CONFIG_PSTORE_COMPRESS=y
   FILES:= $(LINUX_DIR)/fs/pstore/pstore.ko
   AUTOLOAD:=$(call AutoLoad,30,pstore,1)
+  DEPENDS:=+kmod-lib-zlib-deflate +kmod-lib-zlib-inflate
 endef
 
 define KernelPackage/pstore/description
