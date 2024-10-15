@@ -1,0 +1,80 @@
+#
+# Copyright (c) 2024, Qualcomm Innovation Center, Inc. All rights reserved.
+# SPDX-License-Identifier: ISC
+#
+# This script will update the the generated board.json with RDP, Board model,
+# uboot-envtools and wifi_fw name json objects. Thus, the single instance of change
+# that cascades to the entire system will help to enable features with respect
+# to board variants and chipsets.
+
+
+. /usr/share/libubox/jshn.sh
+. /lib/functions/uci-defaults.sh
+
+CFG="/etc/board.json"
+
+get_fw_name() {
+	wifi_ipq="ignored"
+
+	case "$1" in
+		"qcom,ipq5332-ap-mi01.6"|\
+		"qcom,ipq5332-ap-mi01.2"|\
+		"qcom,ipq5332-ap-mi01.4"|\
+		"qcom,ipq5332-ap-mi01.9"|\
+		"qcom,ipq5332-db-mi01.1"|\
+		"qcom,ipq5332-db-mi03.1"|\
+		"qcom,ipq5332-ap-mi01.2-c2")
+			wifi_ipq="ipq5332_qcn9224_v2_single_dualmac_squashfs.img"
+			;;
+		"qcom,ipq5332-ap-mi01.3"|\
+		"qcom,ipq5332-ap-mi04.1")
+			wifi_ipq="ipq5332_qcn6432cs_squashfs.img"
+			;;
+		"qcom,ipq5332-db-mi02.1"|\
+		"qcom,ipq5332-ap-mi04.3"|\
+		"qcom,ipq5332-ap-mi01.3-c2"|\
+		"qcom,ipq5332-ap-mi04.1-c2")
+			wifi_ipq="ipq5332_qcn6432_squashfs.img"
+			;;
+		"qcom,ipq5332-ap-mi01.12"|\
+		"qcom,ipq5332-ap-mi01.14")
+			wifi_ipq="ipq5332_qcn9224_v2_qcn6432_squashfs.img"
+			;;
+		"qcom,ipq5332-ap-mi01.2-qcn9160-c1")
+			wifi_ipq="ipq5332_qcn9224_v2_qcn9160_squashfs.img"
+			;;
+		"qcom,ipq5332-ap-mi01.7")
+			wifi_ipq="ipq5332_qcn6432cs_qcn9160_squashfs.img"
+			;;
+		"qcom,ipq5332-ap-mi01.13")
+			wifi_ipq="ipq5332_qcn9224_v2_qcn6432_qcn9160_squashfs.img"
+			;;
+		*)
+			wifi_ipq="ipq5332_qcn9224_v2_single_dualmac_qcn9160_squashfs.img"
+			;;
+
+	esac
+
+	echo $wifi_ipq
+}
+
+ipq_board_update() {
+	json_init
+	[ -f ${CFG} ] && json_load "$(cat ${CFG})"
+
+	# auto-initialize ipq details if applicable
+	if ! json_is_a board_name object; then
+		name="$(cat /tmp/sysinfo/board_name)"
+		json_add_string board_name "$name"
+	fi
+	if ! json_is_a uboot-envtool object; then
+		[ -f "/usr/sbin/fw_printenv" ] && \
+			json_add_string uboot-envtool "true"
+	fi
+
+	json_add_string sysupgrade "true"
+	json_add_string wififw_name "$(get_fw_name $name)"
+}
+
+ipq_board_update
+board_config_flush

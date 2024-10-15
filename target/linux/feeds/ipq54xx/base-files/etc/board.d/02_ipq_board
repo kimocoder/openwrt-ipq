@@ -1,0 +1,47 @@
+#
+# Copyright (c) 2024, Qualcomm Innovation Center, Inc. All rights reserved.
+# SPDX-License-Identifier: ISC
+#
+# This script will update the the generated board.json with RDP, Board model,
+# uboot-envtools and wifi_fw name json objects. Thus, the single instance of change
+# that cascades to the entire system will help to enable features with respect
+# to board variants and chipsets.
+
+
+. /usr/share/libubox/jshn.sh
+. /lib/functions/uci-defaults.sh
+
+CFG="/etc/board.json"
+
+get_fw_name() {
+	wifi_ipq="ipq5424_qcn9224_v2_squashfs.img"
+
+#	case "$1" in
+#		*)
+#			echo "Unsupported hardware. skipped wifi fw image flash"
+#			;;
+#	esac
+
+	echo $wifi_ipq
+}
+
+ipq_board_update() {
+	json_init
+	[ -f ${CFG} ] && json_load "$(cat ${CFG})"
+
+	# auto-initialize ipq details if applicable
+	if ! json_is_a board_name object; then
+		name="$(cat /tmp/sysinfo/board_name)"
+		json_add_string board_name "$name"
+	fi
+	if ! json_is_a uboot-envtool object; then
+		[ -f "/usr/sbin/fw_printenv" ] && \
+			json_add_string uboot-envtool "true"
+	fi
+
+	json_add_string sysupgrade "true"
+	json_add_string wififw_name "$(get_fw_name $name)"
+}
+
+ipq_board_update
+board_config_flush

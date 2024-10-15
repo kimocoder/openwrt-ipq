@@ -1,0 +1,1 @@
+savedcmd_lib/zlib_deflate/zlib_deflate.o := aarch64-openwrt-linux-musl-ld -EL  -maarch64elf -z noexecstack --no-warn-rwx-segments   -r -o lib/zlib_deflate/zlib_deflate.o @lib/zlib_deflate/zlib_deflate.mod 

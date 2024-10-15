@@ -1,0 +1,1 @@
+savedcmd_lib/zlib_inflate/zlib_inflate.o := aarch64-openwrt-linux-musl-ld -EL  -maarch64elf -z noexecstack --no-warn-rwx-segments   -r -o lib/zlib_inflate/zlib_inflate.o @lib/zlib_inflate/zlib_inflate.mod 

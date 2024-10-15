@@ -1,0 +1,1 @@
+savedcmd_security/keys/trusted-keys/trusted.o := aarch64-openwrt-linux-musl-ld -EL  -maarch64elf -z noexecstack --no-warn-rwx-segments   -r -o security/keys/trusted-keys/trusted.o @security/keys/trusted-keys/trusted.mod 

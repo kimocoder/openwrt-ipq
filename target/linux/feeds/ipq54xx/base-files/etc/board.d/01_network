@@ -1,0 +1,57 @@
+#!/bin/sh
+#
+# Copyright (c) 2014, 2021, The Linux Foundation. All rights reserved.
+# Copyright (c) 2023-2024, Qualcomm Innovation Center, Inc. All rights reserved.
+#
+# Permission to use, copy, modify, and/or distribute this software for any
+# purpose with or without fee is hereby granted, provided that the above
+# copyright notice and this permission notice appear in all copies.
+#
+# THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+# WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+# MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
+# ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+# WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+# ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
+# OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+#
+
+
+[ -e /etc/config/network ] && exit 0
+
+touch /etc/config/network
+
+CFG=/etc/board.json
+
+. /lib/functions/uci-defaults.sh
+
+ipq54xx_setup_interfaces()
+{
+	local num_iface="$(ls /proc/device-tree/soc*/dp*/name |wc -l)"
+
+	case "$num_iface" in
+	6)
+		ucidef_set_interfaces_lan_wan "eth1 eth2 eth3 eth4 eth5" "eth0"
+		;;
+	5)
+		ucidef_set_interfaces_lan_wan "eth1 eth2 eth3 eth4" "eth0"
+		;;
+	3)
+		ucidef_set_interfaces_lan_wan "eth1 eth2" "eth0"
+		;;
+	2)
+		ucidef_set_interfaces_lan_wan "eth1" "eth0"
+		ucidef_add_switch "switch1"
+		ucidef_add_switch_attr "switch1" "enable" false
+		;;
+	*)
+		echo "Unsupported hardware. Network interfaces not intialized"
+		;;
+	esac
+}
+
+board_config_update
+ipq54xx_setup_interfaces
+board_config_flush
+
+exit 0
