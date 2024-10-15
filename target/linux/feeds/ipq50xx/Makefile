@@ -10,7 +10,7 @@ SUBTARGETS:=generic ipq50xx_32
 
 
 KERNELNAME:=Image dtbs
-LINUX_SRC_VERSION:=$(shell basename $(TOPDIR)/qca/src/linux-*.* | sed 's/[^0-9.]*\([0-9.]*\).*/\1/')
+LINUX_SRC_VERSION:=$(shell basename $(TOPDIR)/target/linux/feeds/linux-*.* | sed 's/[^0-9.]*\([0-9.]*\).*/\1/')
 
 ifeq ($(CONFIG_LINUX_IS_FLATTENED_TREE),)
   KERNEL_PATCHVER=$(LINUX_SRC_VERSION)
@@ -23,7 +23,7 @@ else
           echo '$(TOPDIR)/qca/src/linux-$(LINUX_SRC_VERSION)')
 
   $(shell cp -fpR -u $(TOPDIR)/target/linux/feeds/files-6.6/* '$(CONFIG_EXTERNAL_KERNEL_TREE)')
-  #CONFIG_EXTERNAL_KERNEL_TREE=$(shell echo '$(TOPDIR)/qca/src/linux-$(LINUX_SRC_VERSION)')
+  CONFIG_EXTERNAL_KERNEL_TREE=$(shell echo '$(TOPDIR)/target/linux/feeds/linux-$(LINUX_SRC_VERSION)')
   ifneq ($(CONFIG_EXTERNAL_KERNEL_TREE),"")
     $(eval _LINUX_DIR:=$(CONFIG_EXTERNAL_KERNEL_TREE))
     $(shell touch $(_LINUX_DIR)/.scmversion)

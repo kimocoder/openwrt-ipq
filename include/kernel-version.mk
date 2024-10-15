@@ -1,4 +1,3 @@
-
 # Use the default kernel version if the Makefile doesn't override it
 LINUX_RELEASE?=1
 

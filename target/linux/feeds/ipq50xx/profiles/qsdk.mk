@@ -1,1 +1,1 @@
-include $(TOPDIR)/target/linux/ipq/profiles/qsdk.mk
+include $(TOPDIR)/target/linux/feeds/profiles/qsdk.mk
