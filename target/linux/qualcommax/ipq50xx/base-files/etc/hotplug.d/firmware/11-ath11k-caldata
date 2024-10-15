@@ -10,7 +10,8 @@ case "$FIRMWARE" in
 	"ath11k/IPQ5018/hw1.0/caldata.bin")
 		case "$board" in
 			redmi,ax3000|\
-			xiaomi,cr881x)
+			xiaomi,cr881x|\
+			wallys,dr5018)
 				caldata_extract "0:ART" 0x1000 0x20000
 				;;
 		esac
@@ -18,7 +19,8 @@ case "$FIRMWARE" in
 	"ath11k/qcn6122/hw1.0/caldata_1.bin")
 		case "$board" in
 			redmi,ax3000|\
-			xiaomi,cr881x)
+			xiaomi,cr881x|\
+			wallys,dr5018)
 				caldata_extract "0:ART" 0x26800 0x20000
 				;;
 		esac
