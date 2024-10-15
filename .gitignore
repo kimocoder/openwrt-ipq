@@ -13,7 +13,6 @@
 /logs
 /feeds
 /files
-/target/linux/feeds
 /overlay
 /package/feeds
 /package/openwrt-packages
