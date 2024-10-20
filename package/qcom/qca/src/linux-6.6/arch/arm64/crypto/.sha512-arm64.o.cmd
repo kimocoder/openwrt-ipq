@@ -1,0 +1,1 @@
+savedcmd_arch/arm64/crypto/sha512-arm64.o := aarch64-openwrt-linux-musl-ld -EL  -maarch64elf -z noexecstack --no-warn-rwx-segments   -r -o arch/arm64/crypto/sha512-arm64.o @arch/arm64/crypto/sha512-arm64.mod 

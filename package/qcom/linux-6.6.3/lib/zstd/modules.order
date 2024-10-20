@@ -1,0 +1,3 @@
+lib/zstd/zstd_compress.o
+lib/zstd/zstd_decompress.o
+lib/zstd/zstd_common.o

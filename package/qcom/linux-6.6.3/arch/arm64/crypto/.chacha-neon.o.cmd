@@ -1,0 +1,1 @@
+savedcmd_arch/arm64/crypto/chacha-neon.o := aarch64-openwrt-linux-musl-ld -EL  -maarch64elf -z noexecstack --no-warn-rwx-segments   -r -o arch/arm64/crypto/chacha-neon.o @arch/arm64/crypto/chacha-neon.mod 
