@@ -9,7 +9,7 @@
  static struct flow_dissector flow_keys_bonding __read_mostly;
  
  /*-------------------------- Forward declarations ---------------------------*/
-@@ -4418,6 +4420,24 @@ static int bond_get_lowest_level_rcu(str
+@@ -4457,6 +4459,24 @@ static int bond_get_lowest_level_rcu(str
  }
  #endif
  
@@ -34,7 +34,7 @@
  static void bond_get_stats(struct net_device *bond_dev,
  			   struct rtnl_link_stats64 *stats)
  {
-@@ -5873,6 +5893,11 @@ static void bond_destructor(struct net_d
+@@ -5912,6 +5932,11 @@ static void bond_destructor(struct net_d
  		destroy_workqueue(bond->wq);
  
  	free_percpu(bond->rr_tx_counter);
@@ -46,7 +46,7 @@
  }
  
  void bond_setup(struct net_device *bond_dev)
-@@ -6421,6 +6446,14 @@ int bond_create(struct net *net, const c
+@@ -6464,6 +6489,14 @@ int bond_create(struct net *net, const c
  
  	bond_work_init_all(bond);
  
@@ -64,7 +64,7 @@
 --- a/include/net/bonding.h
 +++ b/include/net/bonding.h
 @@ -261,6 +261,7 @@ struct bonding {
- 	spinlock_t ipsec_lock;
+ 	struct mutex ipsec_lock;
  #endif /* CONFIG_XFRM_OFFLOAD */
  	struct bpf_prog *xdp_prog;
 +   u32    id; /* QCA NSS ECM bonding support */
