@@ -1,0 +1,1 @@
+savedcmd_fs/notify/fanotify/built-in.a := rm -f fs/notify/fanotify/built-in.a;  printf "fs/notify/fanotify/%s " fanotify.o fanotify_user.o | xargs aarch64-openwrt-linux-musl-ar cDPrST fs/notify/fanotify/built-in.a

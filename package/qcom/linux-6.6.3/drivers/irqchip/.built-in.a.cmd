@@ -1,0 +1,1 @@
+savedcmd_drivers/irqchip/built-in.a := rm -f drivers/irqchip/built-in.a;  printf "drivers/irqchip/%s " irqchip.o irq-gic.o irq-gic-common.o irq-gic-v3.o irq-gic-v3-mbi.o irq-gic-v3-its.o irq-gic-v3-its-platform-msi.o irq-gic-v4.o irq-partition-percpu.o | xargs aarch64-openwrt-linux-musl-ar cDPrST drivers/irqchip/built-in.a

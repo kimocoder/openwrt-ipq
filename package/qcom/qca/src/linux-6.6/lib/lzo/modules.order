@@ -1,0 +1,2 @@
+lib/lzo/lzo_compress.o
+lib/lzo/lzo_decompress.o

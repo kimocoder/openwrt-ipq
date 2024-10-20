@@ -1,0 +1,1 @@
+savedcmd_security/keys/encrypted-keys/encrypted-keys.mod := printf '%s\n'   encrypted.o ecryptfs_format.o masterkey_trusted.o | awk '!x[$$0]++ { print("security/keys/encrypted-keys/"$$0) }' > security/keys/encrypted-keys/encrypted-keys.mod

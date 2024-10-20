@@ -1,0 +1,1 @@
+savedcmd_security/keys/encrypted-keys/encrypted-keys.o := aarch64-openwrt-linux-musl-ld -EL  -maarch64elf -z noexecstack --no-warn-rwx-segments   -r -o security/keys/encrypted-keys/encrypted-keys.o @security/keys/encrypted-keys/encrypted-keys.mod 

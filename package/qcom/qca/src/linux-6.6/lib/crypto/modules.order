@@ -1,0 +1,6 @@
+lib/crypto/libchacha.o
+lib/crypto/libchacha20poly1305.o
+lib/crypto/libcurve25519-generic.o
+lib/crypto/libcurve25519.o
+lib/crypto/libdes.o
+lib/crypto/libsha256.o

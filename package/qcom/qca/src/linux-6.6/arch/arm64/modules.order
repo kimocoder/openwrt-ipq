@@ -1,0 +1,6 @@
+arch/arm64/crypto/sha1-ce.o
+arch/arm64/crypto/sha2-ce.o
+arch/arm64/crypto/sha256-arm64.o
+arch/arm64/crypto/sha512-arm64.o
+arch/arm64/crypto/chacha-neon.o
+arch/arm64/crypto/poly1305-neon.o
