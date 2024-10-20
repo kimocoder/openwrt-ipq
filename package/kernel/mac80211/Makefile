@@ -46,10 +46,12 @@ include $(INCLUDE_DIR)/package.mk
 
 WMENU:=Wireless Drivers
 
+
 NSS_PATCH:= subsys ath10k ath11k
-IPQ_BRANCH:=$(shell git -C $(TOPDIR) rev-parse --abbrev-ref HEAD)
-IPQ_DATE:=$(shell git -C $(TOPDIR) log -1 --format=%cd --date=format:%Y-%m-%d)
-IPQ_COMMIT:=$(shell git -C $(TOPDIR) log -1 --format=%h)
+#BELOW: old... move it?
+#IPQ_BRANCH:=$(shell git -C $(TOPDIR) rev-parse --abbrev-ref HEAD)
+#IPQ_DATE:=$(shell git -C $(TOPDIR) log -1 --format=%cd --date=format:%Y-%m-%d)
+#IPQ_COMMIT:=$(shell git -C $(TOPDIR) log -1 --format=%h)
 
 define KernelPackage/mac80211/Default
   SUBMENU:=$(WMENU)
