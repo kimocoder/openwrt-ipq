@@ -1,0 +1,11 @@
+--- a/incdefs.sh	2023-12-05 22:05:32.000000000 +0800
++++ b/incdefs.sh.new	2024-05-09 11:42:30.176005374 +0800
+@@ -62,7 +62,7 @@
+ kernel_flags()
+ {
+ 	prefix=""
+-	tstamp=/usr/include/linux/net_tstamp.h
++	tstamp=/include/uapi/linux/net_tstamp.h
+ 	ptp_clock=/usr/include/linux/ptp_clock.h
+ 
+ 	if [ "x$KBUILD_OUTPUT" != "x" ]; then
