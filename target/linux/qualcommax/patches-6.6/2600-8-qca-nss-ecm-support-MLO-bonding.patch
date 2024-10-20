@@ -17,7 +17,7 @@ Signed-off-by: Shivani Soni <quic_soni@quicinc.com>
 
 --- a/drivers/net/bonding/bond_main.c
 +++ b/drivers/net/bonding/bond_main.c
-@@ -1436,6 +1436,10 @@ static netdev_features_t bond_fix_featur
+@@ -1475,6 +1475,10 @@ static netdev_features_t bond_fix_featur
  	return features;
  }
  
@@ -28,7 +28,7 @@ Signed-off-by: Shivani Soni <quic_soni@quicinc.com>
  #define BOND_VLAN_FEATURES	(NETIF_F_HW_CSUM | NETIF_F_SG | \
  				 NETIF_F_FRAGLIST | NETIF_F_GSO_SOFTWARE | \
  				 NETIF_F_HIGHDMA | NETIF_F_LRO)
-@@ -1466,13 +1470,25 @@ static void bond_compute_features(struct
+@@ -1505,13 +1509,25 @@ static void bond_compute_features(struct
  
  	if (!bond_has_slaves(bond))
  		goto done;
@@ -57,7 +57,7 @@ Signed-off-by: Shivani Soni <quic_soni@quicinc.com>
  		enc_features = netdev_increment_features(enc_features,
  							 slave->dev->hw_enc_features,
  							 BOND_ENC_FEATURES);
-@@ -1617,6 +1633,16 @@ static rx_handler_result_t bond_handle_f
+@@ -1656,6 +1672,16 @@ static rx_handler_result_t bond_handle_f
  				  bond->dev->addr_len);
  	}
  
@@ -74,7 +74,7 @@ Signed-off-by: Shivani Soni <quic_soni@quicinc.com>
  	return ret;
  }
  
-@@ -1862,6 +1888,8 @@ int bond_enslave(struct net_device *bond
+@@ -1901,6 +1927,8 @@ int bond_enslave(struct net_device *bond
  		return -EPERM;
  	}
  
@@ -83,7 +83,7 @@ Signed-off-by: Shivani Soni <quic_soni@quicinc.com>
  	if (!bond->params.use_carrier &&
  	    slave_dev->ethtool_ops->get_link == NULL &&
  	    slave_ops->ndo_eth_ioctl == NULL) {
-@@ -1975,13 +2003,17 @@ int bond_enslave(struct net_device *bond
+@@ -2014,13 +2042,17 @@ int bond_enslave(struct net_device *bond
  	call_netdevice_notifiers(NETDEV_JOIN, slave_dev);
  
  	/* If this is the first slave, then we need to set the master's hardware
@@ -107,7 +107,7 @@ Signed-off-by: Shivani Soni <quic_soni@quicinc.com>
  	}
  
  	new_slave = bond_alloc_slave(bond, slave_dev);
-@@ -2010,18 +2042,21 @@ int bond_enslave(struct net_device *bond
+@@ -2049,18 +2081,21 @@ int bond_enslave(struct net_device *bond
  	bond_hw_addr_copy(new_slave->perm_hwaddr, slave_dev->dev_addr,
  			  slave_dev->addr_len);
  
@@ -141,7 +141,7 @@ Signed-off-by: Shivani Soni <quic_soni@quicinc.com>
  		}
  	}
  
-@@ -2382,6 +2417,7 @@ err_undo_flags:
+@@ -2421,6 +2456,7 @@ err_undo_flags:
  
  	return res;
  }
@@ -149,7 +149,7 @@ Signed-off-by: Shivani Soni <quic_soni@quicinc.com>
  
  /* Try to release the slave device <slave> from the bond device <master>
   * It is legal to access curr_active_slave without a lock because all the function
-@@ -2503,13 +2539,23 @@ static int __bond_release_one(struct net
+@@ -2542,13 +2578,23 @@ static int __bond_release_one(struct net
  	}
  
  	bond_set_carrier(bond);
@@ -175,7 +175,7 @@ Signed-off-by: Shivani Soni <quic_soni@quicinc.com>
  	if (!bond_has_slaves(bond)) {
  		call_netdevice_notifiers(NETDEV_CHANGEADDR, bond->dev);
  		call_netdevice_notifiers(NETDEV_RELEASE, bond->dev);
-@@ -2579,6 +2625,7 @@ int bond_release(struct net_device *bond
+@@ -2618,6 +2664,7 @@ int bond_release(struct net_device *bond
  {
  	return __bond_release_one(bond_dev, slave_dev, false, false);
  }
@@ -183,7 +183,7 @@ Signed-off-by: Shivani Soni <quic_soni@quicinc.com>
  
  /* First release a slave and then destroy the bond if no more slaves are left.
   * Must be under rtnl_lock when this function is called.
-@@ -2600,6 +2647,29 @@ static int bond_release_and_destroy(stru
+@@ -2639,6 +2686,29 @@ static int bond_release_and_destroy(stru
  	return ret;
  }
  
@@ -213,7 +213,7 @@ Signed-off-by: Shivani Soni <quic_soni@quicinc.com>
  static void bond_info_query(struct net_device *bond_dev, struct ifbond *info)
  {
  	struct bonding *bond = netdev_priv(bond_dev);
-@@ -4256,6 +4326,24 @@ static struct net_device *bond_xor_get_t
+@@ -4295,6 +4365,24 @@ static struct net_device *bond_xor_get_t
  	return NULL;
  }
  
@@ -238,7 +238,7 @@ Signed-off-by: Shivani Soni <quic_soni@quicinc.com>
  /* bond_get_tx_dev - Calculate egress interface for a given packet.
   *
   * Supports 802.3AD and balance-xor modes
-@@ -4296,6 +4384,9 @@ struct net_device *bond_get_tx_dev(struc
+@@ -4335,6 +4423,9 @@ struct net_device *bond_get_tx_dev(struc
  		return bond_3ad_get_tx_dev(skb, src_mac, dst_mac,
  					   src, dst, protocol,
  					   bond_dev, layer4hdr);
@@ -248,7 +248,7 @@ Signed-off-by: Shivani Soni <quic_soni@quicinc.com>
  	default:
  		return NULL;
  	}
-@@ -5054,20 +5145,26 @@ static int bond_set_mac_address(struct n
+@@ -5093,20 +5184,26 @@ static int bond_set_mac_address(struct n
  	if (!is_valid_ether_addr(ss->__data))
  		return -EADDRNOTAVAIL;
  
@@ -289,7 +289,7 @@ Signed-off-by: Shivani Soni <quic_soni@quicinc.com>
  		}
  	}
  
-@@ -5719,6 +5816,27 @@ static netdev_tx_t bond_tls_device_xmit(
+@@ -5758,6 +5855,27 @@ static netdev_tx_t bond_tls_device_xmit(
  }
  #endif
  
@@ -317,7 +317,7 @@ Signed-off-by: Shivani Soni <quic_soni@quicinc.com>
  static netdev_tx_t __bond_start_xmit(struct sk_buff *skb, struct net_device *dev)
  {
  	struct bonding *bond = netdev_priv(dev);
-@@ -5747,6 +5865,8 @@ static netdev_tx_t __bond_start_xmit(str
+@@ -5786,6 +5904,8 @@ static netdev_tx_t __bond_start_xmit(str
  		return bond_alb_xmit(skb, dev);
  	case BOND_MODE_TLB:
  		return bond_tlb_xmit(skb, dev);
@@ -326,7 +326,7 @@ Signed-off-by: Shivani Soni <quic_soni@quicinc.com>
  	default:
  		/* Should never happen, mode already checked */
  		netdev_err(dev, "Unknown bonding mode %d\n", BOND_MODE(bond));
-@@ -6182,6 +6302,15 @@ static void bond_destructor(struct net_d
+@@ -6221,6 +6341,15 @@ static void bond_destructor(struct net_d
     if (bond->id != (~0U))
         clear_bit(bond->id, &bond_id_mask);
  	/* QCA NSS ECM bonding support */
@@ -342,7 +342,7 @@ Signed-off-by: Shivani Soni <quic_soni@quicinc.com>
  }
  
  void bond_setup(struct net_device *bond_dev)
-@@ -6743,6 +6872,76 @@ out:
+@@ -6786,6 +6915,76 @@ out:
  	return res;
  }
  

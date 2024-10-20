@@ -17,34 +17,6 @@ define Device/EmmcImage
 	IMAGE/sysupgrade.bin/squashfs := append-rootfs | pad-to 64k | sysupgrade-tar rootfs=$$$$@ | append-metadata
 endef
 
-define Device/glinet_gl-ax1800
-	$(call Device/FitImage)
-	$(call Device/UbiFit)
-	DEVICE_VENDOR := GL-iNet
-	DEVICE_MODEL := GL-AX1800
-	BLOCKSIZE := 128k
-	PAGESIZE := 2048
-	DEVICE_DTS_CONFIG := config@cp03-c1
-	SOC := ipq6018
-	DEVICE_PACKAGES := ipq-wifi-glinet_gl-ax1800 e2fsprogs dosfstools kmod-fs-ext4 kmod-fs-ntfs kmod-fs-vfat \
-		kmod-fs-exfat block-mount kmod-usb-storage kmod-usb2 fdisk
-endef
-TARGET_DEVICES += glinet_gl-ax1800
-
-define Device/glinet_gl-axt1800
-	$(call Device/FitImage)
-	$(call Device/UbiFit)
-	DEVICE_VENDOR := GL-iNet
-	DEVICE_MODEL := GL-AXT1800
-	BLOCKSIZE := 128k
-	PAGESIZE := 2048
-	DEVICE_DTS_CONFIG := config@cp03-c1
-	SOC := ipq6018
-	DEVICE_PACKAGES := ipq-wifi-glinet_gl-axt1800 kmod-hwmon-core e2fsprogs dosfstools kmod-fs-ext4 kmod-fs-ntfs kmod-fs-vfat \
-		kmod-fs-exfat kmod-hwmon-pwmfan block-mount kmod-usb-storage kmod-usb2 fdisk
-endef
-TARGET_DEVICES += glinet_gl-axt1800
-
 define Device/jdcloud_ax1800-pro
 	$(call Device/FitImage)
 	$(call Device/EmmcImage)
@@ -67,7 +39,7 @@ define Device/jdcloud_ax6600
 	DEVICE_MODEL := AX6600
 	DEVICE_DTS_CONFIG := config@cp03-c3
 	DEVICE_DTS := ipq6018-jdcloud-ax6600
-	SOC := ipq6018
+	SOC := ipq6010
 	DEVICE_PACKAGES := ipq-wifi-jdcloud_ax6600 kmod-ath11k-pci ath11k-firmware-qcn9074 kmod-fs-ext4 mkf2fs f2fsck kmod-fs-f2fs
 	BLOCKSIZE := 64k
 	KERNEL_SIZE := 6144k
