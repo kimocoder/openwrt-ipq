@@ -34,6 +34,15 @@ ipq60xx_setup_interfaces()
 	cambiumnetworks,xe3-4)
 		ucidef_set_interface_lan "lan1 lan2" "dhcp"
 		;;
+	glinet,gl-ax1800)
+		ucidef_set_interfaces_lan_wan "eth1 eth2 eth3 eth4" "eth0"
+		;;
+	glinet,gl-axt1800)
+		ucidef_set_interfaces_lan_wan "eth1 eth2" "eth0"
+		;;
+	jdc,ax1800-pro)
+		ucidef_set_interfaces_lan_wan "eth0 eth1 eth2" "eth3"
+		;;
 	netgear,wax214)
 		ucidef_set_interfaces_lan_wan "lan"
 		;;

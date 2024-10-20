@@ -176,7 +176,7 @@
 +	if (show_stats) {
 +		if (tb[TCA_NSS_MIRRED_TM]) {
 +			struct tcf_t *tm = RTA_DATA(tb[TCA_NSS_MIRRED_TM]);
-+			print_tm(f,tm);
++			print_tm(tm);
 +		}
 +	}
 +	return 0;
