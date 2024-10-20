@@ -15,7 +15,7 @@
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 
-#include "ipq6018-gl-ax1800.dtsi"
+#include "ipq6000-glinet.dtsi"
 
 / {
 	model = "GL Technologies, Inc. AX1800";
